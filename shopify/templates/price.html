@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load cart %}
+
+{% block title %}
+price
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>price</h1>
+</div>
+<div class="container mx-5">
+<form class="row g-10" action = 'table' method = 'POST'>
+    {% csrf_token %}
+
+    <div class="col-md-6">
+        <label for="fname" class="form-label">First</label>
+        <input type="text" name = 'p' class="form-control" id="a">
+    </div>
+    <br>
+    <div class="col-md-6">
+        <label for="fname" class="form-label">Last</label>
+        <input type="text" name = 'q' class="form-control" id="b">
+    </div>
+    <br>
+    <div class="col-md-6">
+        <label for="fname" class="form-label">Fav</label>
+        <input type="text" name = 'r' class="form-control" id="c">
+    </div>
+    <br>
+    <div class="col-md-6">
+        <label for="fname" class="form-label">Age</label>
+        <input type="number" name = 's' class="form-control" id="d">
+    </div>
+
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-warning">Submit</button>
+    </div>
+
+   
+</form>
+ 
+</div>
+
+
+<button type="button" class="me-2 btn btn-warning my-5 mx-5" data-bs-toggle="modal" data-bs-target="#lgn">lgn</button>
+
+
+<div class="modal fade" id="lgn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">user login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form  class='row g-3' action="tt" method = 'POST'>
+          {% csrf_token %}
+          <div class="col-md-6">
+            <label for="email" class="form-label">fst</label>
+            <input type="text" name = 'fst' class="form-control" id="fst">
+          </div>
+          
+          <input type="submit" class="btn btn-warning" value = 'lgn' >
+        </form>
+      </div>
+      
+      {% comment %} <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> {% endcomment %}
+    </div>
+  </div>
+</div>
+
+
+<div class="position-relative">
+  <div class="position-absolute top-0 start-0"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute top-0 start-50 translate-middle-x"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute top-0 end-0"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute top-50 start-0 translate-middle-y"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute top-50 start-50 translate-middle"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute top-50 end-0 translate-middle-y"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute bottom-0 start-0"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute bottom-0 start-50 translate-middle-x"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+  <div class="position-absolute bottom-0 end-0"><img src = "static\images\c1.jpg" class="card-img-top" alt="..." width = 100 height = 100></div>
+</div>
+
+
+
+
+
+{% endblock content %}

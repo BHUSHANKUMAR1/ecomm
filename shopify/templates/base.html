@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}fff{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+      .box0{
+        background: #001;
+        height: 620px;
+        width: 950px;
+        margin: 10px;
+        display: flex;
+        padding: 90px 70px;
+      }
+      .box1{
+        
+        background: red;
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        }
+        .box2{
+          position: absolute;
+          background: green;
+          width: 100px;
+          height: 100px;
+          margin: 10px;
+          top: 250px;
+          left: 100px;
+        }
+        .box5{
+          position: absolute;
+          background: green;
+          width: 100px;
+          height: 100px;
+          margin: 10px;
+          right: 10px;
+        }
+      .box3,.box4{
+          background: blue;
+          width: 100px;
+          height: 100px;
+          margin: 10px;
+          min-height: 4em
+        }
+      </style>
+  </head>
+  <body>
+    {% comment %} navigation bar {% endcomment %}
+    <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+        <a href="navbar-brand" href = '#'>{{request.session.name}}</a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="{% url 'contact' %}" class="nav-link px-2 text-white">contact</a></li>
+          <li><a href="{% url 'priceee' %}" class="nav-link px-2 text-white">Pricing</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" action = '{% url 'find' %}' method = 'POST'>
+          {% csrf_token %}
+          <input type="search" name = 'search' id="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+          
+        </form>
+       
+          <a href = '{% url 'cart' %}' type="button" class="btn btn-warning position-relative mx-2">
+           <i class="bi bi-cart3"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{request.session.cart|length}}
+              
+            </span>
+          </a>
+        
+        
+        <div class="text-end">
+          {% if request.session.name %}
+            <a href = '{% url 'logout' %}' type="button" class="btn btn-warning me-2">Logout</a>
+            <a href = '{% url 'Order_dtls' %}' type="button" class="btn btn-warning me-2">Order</a>
+            {% comment %} <a href = '{% url 'myorder' %}' type="button" class="btn btn-warning me-2">My Order</a> {% endcomment %}
+          {% else %}
+          <button type="button" class="me-2 btn btn-warning" data-bs-toggle="modal" data-bs-target="#login">Login</button>
+          <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#signup">Sign-up</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>  
+
+  <!-- Modal -->
+<div class="modal fade" id="signup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Register</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" action = 'signup' method = 'POST'>
+          {% csrf_token %}
+          <div class="col-md-6">
+            <label for="fname" class="form-label">First Name</label>
+            <input type="text" name = 'fname' class="form-control" id="fname">
+          </div>
+          <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Last Name</label>
+            <input type="text" name = 'lname' class="form-control" id="lname">
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label">email</label>
+            <input type="email" name = 'emailid' class="form-control" id="email">
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">password</label>
+            <input type="password" name = 'pwd' class="form-control" id="password">
+          </div>
+          <div class="col-md-6">
+            <label for="mbl" class="form-label">Mobile</label>
+            <input type="number" name = 'mbl' class="form-control" id="mbl">
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">Gender</label><br>
+            <input type="radio" name = 'gender' class = 'mx-3'  value = 'male' id="gender">Male <br>
+            <input type="radio" name = 'gender'  class = 'mx-3'  value = 'female' id="gender">Female
+          </div>
+                    
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+          </div>
+        </form>
+        </div>
+        {% comment "" %}<div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>{% endcomment %}
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">user login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form  class='row g-3' action="{% url 'login' %}" method = 'POST'>
+          {% csrf_token %}
+          <div class="col-md-6">
+            <label for="email" class="form-label">email</label>
+            <input type="email" name = 'email' class="form-control" id="emailid">
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">password</label>
+            <input type="password" name = 'pwd' class="form-control" id="password">
+          </div>
+          <input type="submit" class="btn btn-secondary" value = 'login' >
+        </form>
+      </div>
+      {% comment %} <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> {% endcomment %}
+    </div>
+  </div>
+</div>
+  {% comment "content" %}{% endcomment %}
+  {% block content %}{% endblock content %}
+
+  {% comment %} footer {% endcomment %}
+
+  <footer class="text-center text-lg-start bg-dark text-muted">
+        <!-- Section: Social media -->
+        {% comment %} <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> {% endcomment %}
+          <!-- Left -->
+          {% comment %} <div class="me-5 d-none d-lg-block">
+            <span>Get connected with us on social networks:</span>
+          </div> {% endcomment %}
+          <!-- Left -->
+
+          <!-- Right -->
+          <div>
+            <a href="" class="me-4 text-reset">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+              <i class="fab fa-google"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+          <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+          <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <!-- Content -->
+                <h5 class="text-uppercase fw-bold mb-4">
+                  <i class="fas fa-gem me-3"></i>shopify
+                </h5>
+                <h6 class="text-uppercase fw-bold mb-4">
+                  <i class="fas fa-gem me-3"></i>About Us
+                </h6>
+                <p>
+                  We deliver with promise
+                </p>
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  Help
+                </h6>
+                <p>
+                  <a href="#!" class="text-reset">payments</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Shipping</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Cancellation and Return</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">FAQs</a>
+                </p>
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  Social
+                </h6>
+                <p>
+                  <a href="#!" class="text-reset">facebook</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">twitter</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">instagram</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">youtube</a>
+                </p>
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                <p><i class="fas fa-home me-3"></i> New Delhi, 112233, INDIA</p>
+                <p>
+                  <i class="fas fa-envelope me-3"></i>
+                  help@shopify.com
+                </p>
+                <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+          </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+          © 2021 Copyright:
+          <a class="text-reset fw-bold" href="https://shopifyy.com/">shopifyy.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+
+  
+
+  {% comment %} footer end {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>
